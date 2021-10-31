@@ -15,8 +15,7 @@ std::vector<std::string> ReversePolishSolver::split(std::string strToSplit, cons
 int ReversePolishSolver::count_digits(const std::string& s)
 {
     return std::count_if(s.begin(), s.end(),
-        [](unsigned char c) { return std::isdigit(c); }
-    );
+        [](unsigned char c) { return std::isdigit(c); });
 }
 
 void ReversePolishSolver::swapOneToAnswer(std::vector<std::string>& lexemes, int& index, const std::string& ans)
@@ -38,6 +37,14 @@ int ReversePolishSolver::Solve(const std::string& expression)
 {
     std::vector<std::string> lexemes = split(expression, ' ');
     int res = 0;
+
+    if (lexemes.size() == 1)
+    {
+        if ((count_digits(lexemes[0]) != 0))
+        {
+            return stoi(lexemes[0]);
+        }
+    }
 
     bool twoReady = false;
     for (int i = 0; i < lexemes.size(); i++)

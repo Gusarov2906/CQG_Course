@@ -28,8 +28,10 @@ private:
         std::function<int(int, int)>>>> m_Funcs;
 
     std::vector<std::string> split(std::string strToSplit, const char& delimeter);
-    void swapTwoToAnswer(std::vector<std::string>& lexemes, int& index, const std::string& ans);
-    void swapOneToAnswer(std::vector<std::string>& lexemes, int& index, const std::string& ans);
+    void swapTwoToAnswer(std::vector<std::string>& lexemes,
+        int& index, const std::string& ans);
+    void swapOneToAnswer(std::vector<std::string>& lexemes,
+        int& index, const std::string& ans);
     int count_digits(const std::string& s);
         
     int num1 = 0;
@@ -40,38 +42,16 @@ template<size_t argsCount, class T>
 inline void ReversePolishSolver::RegisterOperator(const std::string& name, T fn)
 {
     using namespace std;
-    string type = (typeid(T).name());
-
-    if (type == "struct std::plus<void>")
+    if constexpr (argsCount == 1)
     {
-        variant<function<int(int)>, function<int(int, int)>> func = [](int l, int r)
-        {
-            std::plus<int> plus;
-            return plus(l, r);
-        };
-        m_Funcs.push_back(pair<string, variant<function<int(int)>, function<int(int, int)>>>(name, func));
+        m_Funcs.push_back(pair<string, variant<function<int(int)>,
+            function<int(int, int)>>>
+            (name, static_cast<function<int(int)>>(fn)));
     }
-    else if (type == "struct std::minus<void>")
+    else if constexpr (argsCount == 2)
     {
-        variant<function<int(int)>, function<int(int, int)>> func = [](int l, int r)
-        {
-            std::minus<int> minus;
-            return minus(l, r);
-        };
-        m_Funcs.push_back(pair <string, variant<function<int(int)>, function<int(int, int)>>>(name, func));
-    }
-    else if (type == "struct std::multiplies<void>")
-    {
-        variant<function<int(int)>, std::function<int(int, int)>> func = [](int l, int r)
-        {
-            std::multiplies<int> multiplies;
-            return multiplies(l, r);
-        };
-        m_Funcs.push_back(pair<string, variant<function<int(int)>, function<int(int, int)>>>(name, func));
-    }
-    else
-    {
-        std::variant<function<int(int)>, function<int(int, int)>> func = fn;
-        m_Funcs.push_back(pair<string, variant<function<int(int)>, function<int(int, int)>>>(name, func));
+        m_Funcs.push_back(pair<string, variant<function<int(int)>,
+            function<int(int, int)>>>
+            (name, static_cast<function<int(int, int)>>(fn)));
     }
 }

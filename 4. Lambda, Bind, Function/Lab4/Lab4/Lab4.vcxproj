@@ -143,11 +143,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Functions.cpp" />
     <ClCompile Include="ReversePolishSolver.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Tests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Functions.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ReversePolishSolver.h" />
     <ClInclude Include="Tests.h" />
