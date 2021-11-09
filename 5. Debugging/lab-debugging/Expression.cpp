@@ -12,14 +12,13 @@ static std::unordered_map<std::string, double> s_variables;
 static const std::set<OperatorInfo> sc_operators = {
     { "+", 1, 1, 2, [](const std::vector<double>& args) { return args.size() == 2 ? args[0] + args[1] : args[0]; } },
     { "-", 1, 1, 2, [](const std::vector<double>& args) { return args.size() == 2 ? args[0] - args[1] : -args[0]; } },
-    { "*", 1, 2, 2, [](const std::vector<double>& args) { return args[0] * args[1]; } },
+    { "*", 2, 2, 2, [](const std::vector<double>& args) { return args[0] * args[1]; } },
     { "/", 2, 2, 2, [](const std::vector<double>& args) { return args[0] / args[1]; } },
     { "sin", 0, 1, 1, [](const std::vector<double>& args) { return std::sin(args[0]); } },
     { "cos", 0, 1, 1, [](const std::vector<double>& args) { return std::cos(args[0]); } },
     { "min", 0, 2, 2, [](const std::vector<double>& args) { return std::min(args[0], args[0]); } },
     { "max", 0, 2, 2, [](const std::vector<double>& args) { return std::max(args[1], args[1]); } },
 };
-
 }
 
 const OperatorInfo* FindOperator(const std::string& op)

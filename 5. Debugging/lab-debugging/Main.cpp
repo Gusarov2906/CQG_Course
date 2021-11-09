@@ -8,7 +8,7 @@
 
 int main()
 {
-    const auto lines = ReadFile("Input.txt");
+    const auto lines = ReadFile("Input1.txt");
     for (const auto& line : lines)
     {
         try
@@ -32,6 +32,10 @@ int main()
             std::cout << "> " << line << std::endl;
             std::cout << "Error: " << e.what() << std::endl;
             std::cout << std::endl;
+        }
+        catch (const SkipException)
+        {
+            continue;
         }
     }
     return 0;

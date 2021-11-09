@@ -16,6 +16,13 @@ private:
     int m_offset{};
 };
 
+// Исключение для пропуска комментария
+class SkipException
+{
+  public:
+    SkipException(){};
+};
+
 // Прочитать файл как массив строк
 std::vector<std::string> ReadFile(const std::string& fileName);
 

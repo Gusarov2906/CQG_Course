@@ -147,7 +147,7 @@ ExpressionNodePtr BuildExpressionForTokens(TokenVecIter beginToken, TokenVecIter
         {
             auto closeParenthesis = FindMatchingParenthesis(beginToken, endToken);
             if (std::next(beginToken) == closeParenthesis)
-                throw SyntaxError(closeParenthesis->offset, "Unexpected symbol");
+                throw SyntaxError(std::next(beginToken)->offset, "Unexpected symbol");
 
             const auto node = BuildExpressionForTokens(std::next(beginToken), closeParenthesis);
             nodesAndOperators.emplace_back(beginToken->offset, node);
@@ -199,6 +199,7 @@ ExpressionNodePtr BuildExpressionForTokens(TokenVecIter beginToken, TokenVecIter
         // Прочитать одинокий токен
         const auto node = BuildExpressionForTokens(beginToken, std::next(beginToken));
         nodesAndOperators.emplace_back(beginToken->offset, node);
+        ++beginToken;
     }
 
     if (nodesAndOperators.back().IsOperator())
@@ -219,6 +220,11 @@ ExpressionNodePtr BuildExpressionForTokens(TokenVecIter beginToken, TokenVecIter
 
         const std::vector<ExpressionNodePtr> children{ operand };
         auto node = std::make_shared<OperatorExpressionNode>(children, operatorInfo->fn);
+
+        if (children.size() < operatorInfo->minArgs || children.size() > operatorInfo->maxArgs)
+        {
+            throw SyntaxError(offset, "Operator is not unary");
+        }
 
         nodesAndOperators.erase(nodesAndOperators.begin(), std::next(nodesAndOperators.begin(), 2));
         nodesAndOperators.emplace(nodesAndOperators.begin(), offset, node);

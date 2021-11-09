@@ -45,7 +45,7 @@ TokenVec Tokenize(const std::string& line)
         // Пропустить комментарии
         if (*ptr == '#')
         {
-            break;
+            throw SkipException();
         }
 
         // Пропустить пробелы
@@ -123,6 +123,11 @@ TokenVec Tokenize(const std::string& line)
 
         // Неизвестный символ
         throw SyntaxError(offset, "Unexpected symbol");
+    }
+
+    if (result.size() == 0)
+    {
+        throw SkipException();
     }
 
     return result;
