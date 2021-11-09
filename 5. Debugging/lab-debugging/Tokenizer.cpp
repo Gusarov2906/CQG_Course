@@ -6,7 +6,7 @@ namespace
 {
 
 // Список специальных символов, допустимых в выражении (кроме символа комментария)
-static const std::string sc_specialSymbols = "()+-*/=,";
+static const std::string sc_specialSymbols = "()+-*/=,^";
 
 bool IsSpace(char ch) { return std::isspace(static_cast<unsigned char>(ch)); }
 bool IsDigit(char ch) { return std::isdigit(static_cast<unsigned char>(ch)); }

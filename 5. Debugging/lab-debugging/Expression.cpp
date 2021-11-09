@@ -3,6 +3,7 @@
 #include <set>
 #include <stdexcept>
 #include <unordered_map>
+#include <algorithm>
 
 namespace
 {
@@ -14,10 +15,19 @@ static const std::set<OperatorInfo> sc_operators = {
     { "-", 1, 1, 2, [](const std::vector<double>& args) { return args.size() == 2 ? args[0] - args[1] : -args[0]; } },
     { "*", 2, 2, 2, [](const std::vector<double>& args) { return args[0] * args[1]; } },
     { "/", 2, 2, 2, [](const std::vector<double>& args) { return args[0] / args[1]; } },
+    { "^", 3, 2, 2, [](const std::vector<double> &args) { return pow(args[0],args[1]); }},
     { "sin", 0, 1, 1, [](const std::vector<double>& args) { return std::sin(args[0]); } },
     { "cos", 0, 1, 1, [](const std::vector<double>& args) { return std::cos(args[0]); } },
     { "min", 0, 2, 2, [](const std::vector<double>& args) { return std::min(args[0], args[0]); } },
     { "max", 0, 2, 2, [](const std::vector<double>& args) { return std::max(args[1], args[1]); } },
+    { "average", 0, 1, INT_MAX, [](const std::vector<double> &args) { 
+        int count = 0;
+        double sum = 0;
+        std::for_each(args.begin(), args.end(), [&count, &sum](const double &val) {
+            sum += val;
+            count++;
+        });
+        return (double)sum/count;}},
 };
 }
 
@@ -54,7 +64,28 @@ double OperatorExpressionNode::Compute() const
     std::vector<double> values;
     for (const auto& child : m_children)
         values.push_back(child->Compute());
-    return m_op(values);
+    try
+    {
+        auto res = m_op(values);
+        if (std::isfinite(res))
+        {
+            return m_op(values);
+        }
+        else
+        {
+            throw std::string("Out of range number argument!");
+        }
+    }
+    catch (const std::out_of_range &e)
+    {
+        throw std::string("Out of range number argument!");
+    }
+    catch (const std::invalid_argument &e)
+    {
+        throw std::string("Not number argument!");
+    }
+
+    return 0;
 }
 
 double AssignmentExpressionNode::Compute() const
