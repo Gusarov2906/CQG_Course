@@ -40,6 +40,10 @@ void Tests::run()
     assert(solver.SolveWithExceptions("3 ++") == "4");
     assert(solver.SolveWithExceptions("-5 ++") == "-4");
 
+    solver.RegisterOperator<1>("--", Decrement());
+    assert(solver.SolveWithExceptions("3 --") == "2");
+    assert(solver.SolveWithExceptions("-5 --") == "-6");
+
     assert(solver.SolveWithExceptions("5 6 7 * - ~ 18 - 1 + ^") == "400");
     assert(solver.SolveWithExceptions("2 4 ** 8 - 2 * double") == "32");
 

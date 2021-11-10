@@ -16,6 +16,7 @@ int main()
     solver.RegisterOperator<2>("**", Functions::square);
     solver.RegisterOperator<1>("~", [](int x) {return -x; });
     solver.RegisterOperator<1>("^", std::bind(Functions::square, std::placeholders::_1, 2));
+    solver.RegisterOperator<1>("--", Decrement());
 
     std::cout << solver.SolveWithExceptions("2 double 3 4 + +") << std::endl; // 11
     std::cout << solver.SolveWithExceptions("4 double 3 4 + -") << std::endl; // 3
@@ -24,6 +25,7 @@ int main()
     std::cout << solver.SolveWithExceptions("2 2 **") << std::endl; // 4
     std::cout << solver.SolveWithExceptions("2 ^") << std::endl; // 4
     std::cout << solver.SolveWithExceptions("123") << std::endl; // 123
+    std::cout << solver.SolveWithExceptions("123 --") << std::endl; // 122
 
     return 0;
 }
