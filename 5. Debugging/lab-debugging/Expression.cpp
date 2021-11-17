@@ -18,8 +18,8 @@ static const std::set<OperatorInfo> sc_operators = {
     { "^", 3, 2, 2, [](const std::vector<double> &args) { return pow(args[0],args[1]); }},
     { "sin", 0, 1, 1, [](const std::vector<double>& args) { return std::sin(args[0]); } },
     { "cos", 0, 1, 1, [](const std::vector<double>& args) { return std::cos(args[0]); } },
-    { "min", 0, 2, 2, [](const std::vector<double>& args) { return std::min(args[0], args[0]); } },
-    { "max", 0, 2, 2, [](const std::vector<double>& args) { return std::max(args[1], args[1]); } },
+    { "min", 0, 2, 2, [](const std::vector<double>& args) { return std::min(args[0], args[1]); } },
+    { "max", 0, 2, 2, [](const std::vector<double>& args) { return std::max(args[0], args[1]); } },
     { "average", 0, 1, INT_MAX, [](const std::vector<double> &args) { 
         int count = 0;
         double sum = 0;

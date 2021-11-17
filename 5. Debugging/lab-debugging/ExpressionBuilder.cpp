@@ -147,7 +147,7 @@ ExpressionNodePtr BuildExpressionForTokens(TokenVecIter beginToken, TokenVecIter
         {
             auto closeParenthesis = FindMatchingParenthesis(beginToken, endToken);
             if (std::next(beginToken) == closeParenthesis)
-                throw SyntaxError(std::next(beginToken)->offset, "Unexpected symbol");
+                throw SyntaxError(closeParenthesis->offset, "Unexpected symbol");
 
             const auto node = BuildExpressionForTokens(std::next(beginToken), closeParenthesis);
             nodesAndOperators.emplace_back(beginToken->offset, node);
