@@ -9,23 +9,25 @@ CQG Internship 2021
 15 сен | Лаба   | [Задачи](<1. Software Design/Задачи.md>)
 22 сен | Лекция | [STL](<2. STL/STL Summary (2021).pdf>)
 29 сен | Лаба   | [STL](<2. STL/STL Task.md>)
-6  окт | Лекция | Move Semantics and Smart Pointers
-13 окт | Лаба   | Move Semantics and Smart Pointers
-20 окт | Лекция | Modern C++: lambda, bind, function
-27 окт | Лаба   | Modern C++: lambda, bind, function
-3  ноя | Лекция | Debugging
-10 ноя | Лаба   | Debugging
-17 ноя | Лекция | WinAPI+DLL
-24 ноя | Лаба   | WinAPI+DLL
+6  окт | Лекция | [Move Semantics and Smart Pointers](<3. Move Semantic, Smart Pointers/Modern C++. Move Semantic, Smart Pointers 2021.pdf>)
+13 окт | Лаба   | [Move Semantics and Smart Pointers](<3. Move Semantic, Smart Pointers/Modern C++. Move Semantic, Smart Pointers.md>)
+20 окт | Лекция | [Modern C++: lambda, bind, function](<4. Lambda, Bind, Function/Modern C++. Lambda, Bind, Function.pdf>)
+27 окт | Лаба   | [Modern C++: lambda, bind, function](<4. Lambda, Bind, Function/Modern C++. Lambda, Bind, Function.md>)
+3  ноя | Лекция | [Debugging](<5. Debugging/Debugging.pdf>)
+10 ноя | Лаба   | [Debugging](<5. Debugging/lab-debugging/README.md>)
+17 ноя | Лекция | [WinAPI+DLL](<6. WinAPI+DLL/WinAPI+DLL.pdf>)
+24 ноя | Лаба   | [WinAPI+DLL](<6. WinAPI+DLL/WinAPI+DLL.md>)
 1  дек | Лекция | Multithreading
 8  дек | Лаба   | Multithreading
 15 дек | Лекция | Regular expressions
 22 дек | Лаба   | Regular expressions
 ?? дек | Зачет  | Вопросы к зачету будут выложены в конце семестра
 
-Лекции - 3 пара (12:50) в аудитории 3109.
+Лекции - 12:50 в Discord.
 
-Лабораторные работы - 4 пара (14:30) в аудитории 3120Б.
+Лабораторные работы должны быть присланы до 14:30 указанных дат. За каждую неделю задержки будут отниматься 2 балла. Проверить лабораторные работы мы обязуемся до вечера следующего дня.
+
+Адрес для работ: zelinterns@cqg.com
 
 ## Оценки
 
