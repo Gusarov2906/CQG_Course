@@ -18,6 +18,20 @@ std::string tickTimeToStr(const tm& tickTime)
     return res;
 }
 
+// Function to get numeric param from std::cin
+bool getNumericParam(int& param)
+{
+    std::cin >> param;
+    if (std::cin.fail())
+    {
+        std::cin.clear();
+        std::cin.ignore(1024, '\n');
+        std::cout << "Invalid input " << std::endl;
+        return false;
+    }
+    return true;
+}
+
 int main()
 {    
     std::cout.precision(8);
@@ -28,11 +42,24 @@ int main()
     std::vector<Tick*> barTicks;
     int countBars;
 
-    // Get params from user
-    std::cout << "Write time interval for bars: ";
-    std::cin >> timeInterval;
-    std::cout << "Write count of bars: ";
-    std::cin >> countBars;
+    // Get correct params from user
+    while (true)
+    {
+        std::cout << "Write time interval for bars: ";
+        if (!getNumericParam(timeInterval))
+            continue;
+        std::cout << "Write count of bars: ";
+        if (!getNumericParam(countBars))
+            continue;
+        if (timeInterval <= 0 || countBars < 1)
+        {
+            std::cout << "Bad start params.\n"
+                << "Time interval must be equal or greater than 0.\n"
+                << "Count of bars must be greater than 0." << std::endl;
+            continue;
+        }
+        break;
+    }
 
     // Start sending data
     StartFeed();
@@ -63,10 +90,8 @@ int main()
             barTicks.clear();
 
             // The cycle of receiving and processing stop condition
-            if (countBars == 1)
+            if (--countBars == 0)
                 break;
-            else
-                countBars--;
         }
         
         // Adding data to the container for further processing
