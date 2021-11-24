@@ -8,7 +8,6 @@
 #include <algorithm>
 
 const int buf_size = 100;
-const short timeInterval = 20;
 
 // Fuction to convert time to string
 std::string tickTimeToStr(const tm& tickTime)
@@ -24,9 +23,16 @@ int main()
     std::cout.precision(8);
 
     // Initial initialization of parameters
+    int timeInterval;
     MSG msg;
     std::vector<Tick*> barTicks;
-    int countToStop = 0;
+    int countBars;
+
+    // Get params from user
+    std::cout << "Write time interval for bars: ";
+    std::cin >> timeInterval;
+    std::cout << "Write count of bars: ";
+    std::cin >> countBars;
 
     // Start sending data
     StartFeed();
@@ -39,7 +45,7 @@ int main()
 
         // Creating a bar based on incoming ticks for a time interval
         if (barTicks.size() > 0 &&
-            (mktime(&reinterpret_cast<Tick*>(msg.lParam)->tickTime) - mktime(&barTicks.front()->tickTime)) > timeInterval)
+            (mktime(&reinterpret_cast<Tick*>(msg.lParam)->tickTime) - mktime(&barTicks.front()->tickTime)) >= timeInterval)
         {
             auto minMaxVal = std::minmax_element(barTicks.begin(), barTicks.end(), 
                 [](const Tick* a, const Tick* b) { return a->tickPrice < b->tickPrice; });
@@ -57,10 +63,10 @@ int main()
             barTicks.clear();
 
             // The cycle of receiving and processing stop condition
-            if (countToStop == 2)
+            if (countBars == 1)
                 break;
             else
-                countToStop++;
+                countBars--;
         }
         
         // Adding data to the container for further processing
