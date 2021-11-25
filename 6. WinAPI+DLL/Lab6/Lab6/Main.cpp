@@ -41,6 +41,8 @@ int main()
     MSG msg;
     std::vector<Tick*> barTicks;
     int countBars;
+    bool isFirstTick = true;
+    time_t firstTickTime;
 
     // Get correct params from user
     while (true)
@@ -70,9 +72,16 @@ int main()
         // Receive data
         GetMessage(&msg, NULL, 0, 0);
 
+        // Get point of reference of time
+        if (isFirstTick)
+        {
+            isFirstTick = false;
+            firstTickTime = mktime(&reinterpret_cast<Tick*>(msg.lParam)->tickTime);
+        }
+
         // Creating a bar based on incoming ticks for a time interval
         if (barTicks.size() > 0 &&
-            (mktime(&reinterpret_cast<Tick*>(msg.lParam)->tickTime) - mktime(&barTicks.front()->tickTime)) >= timeInterval)
+            (mktime(&reinterpret_cast<Tick*>(msg.lParam)->tickTime) - firstTickTime) >= timeInterval)
         {
             auto minMaxVal = std::minmax_element(barTicks.begin(), barTicks.end(), 
                 [](const Tick* a, const Tick* b) { return a->tickPrice < b->tickPrice; });
@@ -92,6 +101,9 @@ int main()
             // The cycle of receiving and processing stop condition
             if (--countBars == 0)
                 break;
+
+            // Increasing the reference point by an interval
+            firstTickTime += timeInterval;
         }
         
         // Adding data to the container for further processing
