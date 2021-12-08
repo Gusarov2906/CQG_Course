@@ -28,6 +28,16 @@ void Message::setQuitFlag(bool val)
     m_quitFlag = val;
 }
 
+uint16_t Message::getIndexInList() const
+{
+    return m_indexInList;
+}
+
+void Message::setIndexInList(uint16_t index)
+{
+    m_indexInList = index;
+}
+
 uint32_t Message::getId() const
 {
     return m_id;

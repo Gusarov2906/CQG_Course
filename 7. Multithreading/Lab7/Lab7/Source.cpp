@@ -113,20 +113,36 @@ void New(int delay, std::string message)
 //Function to display all scheldured notifications
 void List()
 {
-    for (uint16_t i = 0; i < messageList.size(); i++)
+    if (messageList.size() > 0)
     {
-        //display indexes starts from 1
-        std::cout << "\t" << i + 1 << ".\t" + messageList[i]->getReport() << std::endl;
+        for (uint16_t i = 0; i < messageList.size(); i++)
+        {
+            //display indexes starts from 1
+            std::cout << "\t" << i + 1 << ".\t" + messageList[i]->getReport() << std::endl;
+            //memorize the index in the list
+            messageList[i]->setIndexInList(i + 1);
+        }
+    }
+    else
+    {
+        std::cout << "There is notifications in scheldure." << std::endl;
     }
 }
 
 //Function to cancel notification
 void Cancel(int index)
 {
-    //indexes in user interface starts from 1 because we need index--
-    index--;
-    std::cout << "Notification with text \"" << messageList[index]->getName() << "\" was cancelled" << std::endl;
-    messageList[index]->setQuitFlag(true);
+    for (std::shared_ptr<Message> msg : messageList)
+    {
+        //try to get msg by index in list created by last list usage
+        if (msg->getIndexInList() == index)
+        {
+            std::cout << "Notification with text \"" << msg->getName() << "\" was cancelled" << std::endl;
+            msg->setQuitFlag(true);
+            return;
+        }
+    }
+    std::cout << "There is no notification with this index in scheldure.\nPlease use \"list\" to find index before cancel!" << std::endl;
 }
 
 //Function to stop all notifications and exit from programm
