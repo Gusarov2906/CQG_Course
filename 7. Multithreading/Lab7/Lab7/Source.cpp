@@ -56,6 +56,7 @@ void Show(std::shared_ptr<Message> msg)
 //Function to show messagebox after delay
 void DelayedShow(std::shared_ptr<Message> msg)
 {
+    std::unique_lock<std::mutex> lock(showMutex);
     //delay calculates from msg
     int delay = msg->calculateRemainingTime();
     
@@ -82,6 +83,7 @@ void DelayedShow(std::shared_ptr<Message> msg)
         std::cout << err << std::endl;
         return;
     }
+    lock.unlock();
     //show MessageBox
     Show(msg);
 }
